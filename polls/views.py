@@ -1,64 +1,47 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import Http404
-from django.utils import timezone
+from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponse, JsonResponse
 
-from .models import Question
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
-from django.db.models import F
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views import generic
-from django.utils import timezone
+from .models import Jogador
+from .serializers import JogadorSerializer
 
+import json
 
-from .models import Choice, Question
+@api_view(['GET'])
+def get_jogadores(request):
+    if request.method == 'GET':
+        jogadores = Jogador.objects.all()                          # Get all objects in Jogador's database (It returns a queryset)
+        serializer = JogadorSerializer(jogadores, many=True)       # Serialize the object data into json (Has a 'many' parameter cause it's a queryset)
+        return Response(serializer.data)                    # Return the serialized data
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def get_by_id(request, id):
+    jogador = get_object_or_404(Jogador, id=id)
+    serializer = JogadorSerializer(jogador)
+    return Response(serializer.data)
 
-class IndexView(generic.ListView):
-    template_name = "polls/index.html"
-    context_object_name = "latest_question_list"
-    def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[
-            :5
-        ]
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def jogador_manager(request):
+    if player_id := request.GET['id']:
+        jogador = get_object_or_404(Jogador, id=player_id)
 
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = "polls/detail.html"
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        if request.method == 'GET':
+            serializer = JogadorSerializer(jogador)
+            return Response(serializer.data)
 
+        elif request.method == 'PUT':
+            serializer = JogadorSerializer(jogador, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = "polls/results.html"
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST["choice"])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(
-            request,
-            "polls/detail.html",
-            {
-                "question": question,
-                "error_message": "You didn't select a choice.",
-            },
-        )
-    else:
-        selected_choice.votes = F("votes") + 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+        elif request.method == 'DELETE':
+            jogador.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+    else:    
+        return Response(status=status.HTTP_400_BAD_REQUEST)
