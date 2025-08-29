@@ -45,24 +45,25 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "tailwind",
     "theme",
-    "django_browser_reload"
+    "django_browser_reload",
+    "rest_framework"
 ]
 
 TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
-
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = 'xadrez64.urls'
 
 TEMPLATES = [
     {
@@ -79,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mysite.wsgi.application'
+WSGI_APPLICATION = 'xadrez64.wsgi.application'
 
 
 # Database
