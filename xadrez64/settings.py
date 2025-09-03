@@ -36,7 +36,7 @@ CSRF_TRUSTED_ORIGINS = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS","https://127.0.0.
 # Application definition
 
 INSTALLED_APPS = [
-    "polls.apps.PollsConfig",
+    "tournament.apps.TournamentConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     "django_browser_reload",
-    "rest_framework"
+    "rest_framework",
+    "xadrez64"
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -91,7 +92,7 @@ DATABASES = {
          'ENGINE': 'django.db.backends.{}'.format(
              os.getenv('DATABASE_ENGINE', 'sqlite3')
          ),
-         'NAME': os.getenv('DATABASE_NAME', 'polls'),
+         'NAME': os.getenv('DATABASE_NAME', 'tornament'),
          'USER': os.getenv('DATABASE_USERNAME', 'myprojectuser'),
          'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
          'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),

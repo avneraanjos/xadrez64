@@ -21,8 +21,7 @@ from . import views # Assuming you have a views.py in the same app
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home_view, name='home'),
+    path('', view=views.home_view),
     path("__reload__/", include("django_browser_reload.urls")),
-    path('jogadores/', include("polls.urls"), name='get_jogadores_url'),  # New API endpoint
-    
+    path('jogadores/', include("tournament.urls"), name='get_jogadores_url'),  
 ]
