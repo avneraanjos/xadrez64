@@ -5103,8 +5103,9 @@ a.close.disabled {
 .align-text-top {
   vertical-align: text-top !important; }
 
-.bg-primary {
-  /* background-color: #5e72e4 !important;  */}
+/* .bg-primary {
+  background-color: #5e72e4 !important;
+} */
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
@@ -14000,9 +14001,9 @@ h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
   color: #8898aa;
   letter-spacing: 2px;
   margin-bottom: 0; }
-
+/* 
 .bg-blue {
-  background-color: #5e72e4 !important; }
+  background-color: #5e72e4 !important; } */
 
 a.bg-blue:hover, a.bg-blue:focus,
 button.bg-blue:hover,
