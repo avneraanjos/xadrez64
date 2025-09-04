@@ -15,7 +15,7 @@ services:
       - db
     volumes:
       - ./static:/app/staticfiles
-      - ./xadrez64/templates:/app/xadrez64/templates
+      - ./blog/templates:/app/blog/templates
     env_file:
       - .env.prod
 

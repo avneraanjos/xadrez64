@@ -37,6 +37,7 @@ CSRF_TRUSTED_ORIGINS = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS","https://127.0.0.
 
 INSTALLED_APPS = [
     "tournament.apps.TournamentConfig",
+    "blog.apps.BlogConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -46,8 +47,7 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     "django_browser_reload",
-    "rest_framework",
-    "xadrez64"
+    "rest_framework"
 ]
 
 TAILWIND_APP_NAME = 'theme'
